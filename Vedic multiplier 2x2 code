@@ -1,0 +1,10 @@
+module vedic_2x2(input [1:0] a, input [1:0] b, output [3:0] p);
+  wire [3:0] temp;
+  
+  assign temp[0] = a[0] & b[0];
+  assign temp[1] = (a[1] & b[0]) ^ (a[0] & b[1]);
+  assign temp[2] = (a[1] & b[1]) ^ ((a[1] & b[0]) & (a[0] & b[1]));
+  assign temp[3] = (a[1] & b[1]) & ((a[1] & b[0]) & (a[0] & b[1]));
+
+  assign p = temp;
+endmodule
