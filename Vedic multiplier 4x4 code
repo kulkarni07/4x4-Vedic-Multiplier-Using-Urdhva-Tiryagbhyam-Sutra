@@ -1,0 +1,18 @@
+module vedic_4x4(input [3:0] a, input [3:0] b, output [7:0] p);
+  wire [3:0] p0, p1, p2, p3;
+  wire [5:0] temp1, temp2, temp3;
+
+  // Partial products
+  vedic_2x2 u1 (a[1:0], b[1:0], p0);       // LSB
+  vedic_2x2 u2 (a[3:2], b[1:0], p1);       // Middle 1
+  vedic_2x2 u3 (a[1:0], b[3:2], p2);       // Middle 2
+  vedic_2x2 u4 (a[3:2], b[3:2], p3);       // MSB
+
+  // Combine results
+  assign temp1 = {2'b00, p0[3:2]} + {p1, 2'b00};
+  assign temp2 = temp1 + {p2, 2'b00};
+  assign temp3 = temp2 + {p3, 4'b0000};
+
+  assign p[1:0] = p0[1:0];
+  assign p[7:2] = temp3[5:0];
+endmodule
